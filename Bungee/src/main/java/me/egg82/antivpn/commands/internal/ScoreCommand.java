@@ -9,7 +9,6 @@ import me.egg82.antivpn.api.model.source.models.SourceModel;
 import me.egg82.antivpn.config.ConfigUtil;
 import me.egg82.antivpn.locale.MessageKey;
 import me.egg82.antivpn.utils.DNSUtil;
-import me.egg82.antivpn.utils.ExceptionUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
@@ -103,7 +102,7 @@ public class ScoreCommand extends AbstractCommand {
                 error += 1;
                 continue;
             } catch (ExecutionException | CancellationException ex) {
-                ExceptionUtil.handleException(ex, logger);
+                logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                 if (!(ex.getCause() instanceof APIException) || !((APIException) ex.getCause()).isHard()) {
                     error += 1;
                 }

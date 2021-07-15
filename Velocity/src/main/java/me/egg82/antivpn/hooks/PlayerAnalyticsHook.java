@@ -17,7 +17,6 @@ import me.egg82.antivpn.api.model.ip.AlgorithmMethod;
 import me.egg82.antivpn.api.model.ip.IPManager;
 import me.egg82.antivpn.api.model.player.PlayerManager;
 import me.egg82.antivpn.config.ConfigUtil;
-import me.egg82.antivpn.utils.ExceptionUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -113,7 +112,7 @@ public class PlayerAnalyticsHook implements PluginHook {
                         } catch (InterruptedException ignored) {
                             Thread.currentThread().interrupt();
                         } catch (ExecutionException | CancellationException ex) {
-                            ExceptionUtil.handleException(ex, logger);
+                            logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                         }
                     } else {
                         try {
@@ -123,7 +122,7 @@ public class PlayerAnalyticsHook implements PluginHook {
                         } catch (InterruptedException ignored) {
                             Thread.currentThread().interrupt();
                         } catch (ExecutionException | CancellationException ex) {
-                            ExceptionUtil.handleException(ex, logger);
+                            logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                         }
                     }
                     latch.countDown();
@@ -173,7 +172,7 @@ public class PlayerAnalyticsHook implements PluginHook {
                     } catch (InterruptedException ignored) {
                         Thread.currentThread().interrupt();
                     } catch (ExecutionException | CancellationException ex) {
-                        ExceptionUtil.handleException(ex, logger);
+                        logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                     }
                     latch.countDown();
                 });
@@ -223,7 +222,7 @@ public class PlayerAnalyticsHook implements PluginHook {
                 } catch (InterruptedException ignored) {
                     Thread.currentThread().interrupt();
                 } catch (ExecutionException | CancellationException ex) {
-                    ExceptionUtil.handleException(ex, logger);
+                    logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                 }
             } else {
                 try {
@@ -231,7 +230,7 @@ public class PlayerAnalyticsHook implements PluginHook {
                 } catch (InterruptedException ignored) {
                     Thread.currentThread().interrupt();
                 } catch (ExecutionException | CancellationException ex) {
-                    ExceptionUtil.handleException(ex, logger);
+                    logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                 }
             }
 
@@ -253,7 +252,7 @@ public class PlayerAnalyticsHook implements PluginHook {
             } catch (InterruptedException ignored) {
                 Thread.currentThread().interrupt();
             } catch (ExecutionException | CancellationException ex) {
-                ExceptionUtil.handleException(ex, logger);
+                logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
             }
 
             return false;

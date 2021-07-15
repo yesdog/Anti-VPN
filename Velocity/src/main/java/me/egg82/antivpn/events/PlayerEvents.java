@@ -17,7 +17,6 @@ import me.egg82.antivpn.config.ConfigUtil;
 import me.egg82.antivpn.hooks.LuckPermsHook;
 import me.egg82.antivpn.services.lookup.PlayerInfo;
 import me.egg82.antivpn.services.lookup.PlayerLookup;
-import me.egg82.antivpn.utils.ExceptionUtil;
 import me.egg82.antivpn.utils.ValidationUtil;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import ninja.egg82.events.VelocityEvents;
@@ -83,7 +82,7 @@ public class PlayerEvents extends EventHolder {
             Thread.currentThread().interrupt();
             uuid = null;
         } catch (ExecutionException | CancellationException ex) {
-            ExceptionUtil.handleException(ex, logger);
+            logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
             uuid = null;
         }
 
@@ -97,7 +96,7 @@ public class PlayerEvents extends EventHolder {
                     Thread.currentThread().interrupt();
                     val = null;
                 } catch (ExecutionException | CancellationException ex) {
-                    ExceptionUtil.handleException(ex, logger);
+                    logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                     val = null;
                 }
                 checkPermsPlayer(event, uuid, Boolean.TRUE.equals(val));
@@ -151,7 +150,7 @@ public class PlayerEvents extends EventHolder {
                 try {
                     proxy.getCommandManager().executeImmediatelyAsync(proxy.getConsoleCommandSource(), command).join();
                 } catch (CancellationException | CompletionException ex) {
-                    ExceptionUtil.handleException(ex, logger);
+                    logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                 }
             }
             String kickMessage = ipManager.getVpnKickMessage(event.getUsername(), uuid, ip);
@@ -209,7 +208,7 @@ public class PlayerEvents extends EventHolder {
                 } catch (InterruptedException ignored) {
                     Thread.currentThread().interrupt();
                 } catch (ExecutionException | CancellationException ex) {
-                    ExceptionUtil.handleException(ex, logger);
+                    logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                 }
             } else {
                 try {
@@ -217,7 +216,7 @@ public class PlayerEvents extends EventHolder {
                 } catch (InterruptedException ignored) {
                     Thread.currentThread().interrupt();
                 } catch (ExecutionException | CancellationException ex) {
-                    ExceptionUtil.handleException(ex, logger);
+                    logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                 }
             }
         }
@@ -230,7 +229,7 @@ public class PlayerEvents extends EventHolder {
             } catch (InterruptedException ignored) {
                 Thread.currentThread().interrupt();
             } catch (ExecutionException | CancellationException ex) {
-                ExceptionUtil.handleException(ex, logger);
+                logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
             }
         }
     }
@@ -317,7 +316,7 @@ public class PlayerEvents extends EventHolder {
                     Thread.currentThread().interrupt();
                     isVPN = false;
                 } catch (ExecutionException | CancellationException ex) {
-                    ExceptionUtil.handleException(ex, logger);
+                    logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                     isVPN = false;
                 }
             } else {
@@ -327,7 +326,7 @@ public class PlayerEvents extends EventHolder {
                     Thread.currentThread().interrupt();
                     isVPN = false;
                 } catch (ExecutionException | CancellationException ex) {
-                    ExceptionUtil.handleException(ex, logger);
+                    logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                     isVPN = false;
                 }
             }
@@ -362,7 +361,7 @@ public class PlayerEvents extends EventHolder {
                 Thread.currentThread().interrupt();
                 isMCLeaks = false;
             } catch (ExecutionException | CancellationException ex) {
-                ExceptionUtil.handleException(ex, logger);
+                logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                 isMCLeaks = false;
             }
 
