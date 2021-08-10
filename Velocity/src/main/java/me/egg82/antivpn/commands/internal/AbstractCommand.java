@@ -2,6 +2,7 @@ package me.egg82.antivpn.commands.internal;
 
 import co.aikar.commands.CommandIssuer;
 import com.velocitypowered.api.proxy.ProxyServer;
+import me.egg82.antivpn.locale.LocalizedCommandSender;
 import me.egg82.antivpn.services.lookup.PlayerInfo;
 import me.egg82.antivpn.services.lookup.PlayerLookup;
 import org.jetbrains.annotations.NotNull;
@@ -15,9 +16,9 @@ public abstract class AbstractCommand implements Runnable {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected final ProxyServer proxy;
-    protected final CommandIssuer issuer;
+    protected final LocalizedCommandSender issuer;
 
-    protected AbstractCommand(@NotNull ProxyServer proxy, @NotNull CommandIssuer issuer) {
+    protected AbstractCommand(@NotNull ProxyServer proxy, @NotNull LocalizedCommandSender issuer) {
         this.proxy = proxy;
         this.issuer = issuer;
     }

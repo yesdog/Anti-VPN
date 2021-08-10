@@ -15,6 +15,7 @@ import me.egg82.antivpn.api.platform.VelocityPlatform;
 import me.egg82.antivpn.config.CachedConfig;
 import me.egg82.antivpn.config.ConfigUtil;
 import me.egg82.antivpn.hooks.LuckPermsHook;
+import me.egg82.antivpn.locale.LocalizedCommandSender;
 import me.egg82.antivpn.services.lookup.PlayerInfo;
 import me.egg82.antivpn.services.lookup.PlayerLookup;
 import me.egg82.antivpn.utils.ValidationUtil;
@@ -37,9 +38,9 @@ import java.util.concurrent.ExecutionException;
 
 public class PlayerEvents extends EventHolder {
     private final ProxyServer proxy;
-    private final CommandIssuer console;
+    private final LocalizedCommandSender console;
 
-    public PlayerEvents(@NotNull Object plugin, @NotNull ProxyServer proxy, @NotNull CommandIssuer console) {
+    public PlayerEvents(@NotNull Object plugin, @NotNull ProxyServer proxy, @NotNull LocalizedCommandSender console) {
         this.proxy = proxy;
         this.console = console;
 
