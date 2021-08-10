@@ -293,6 +293,11 @@
             <version>${depdownloader.version}</version>
         </dependency>
         <dependency>
+            <groupId>ninja.egg82</groupId>
+            <artifactId>service-locator</artifactId>
+            <version>${servicelocator.version}</version>
+        </dependency>
+        <dependency>
             <groupId>me.lucko</groupId>
             <artifactId>jar-relocator</artifactId>
             <version>${relocator.version}</version>
