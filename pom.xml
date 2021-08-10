@@ -20,7 +20,7 @@
         <spigot.version>1.16.5-R0.1-SNAPSHOT</spigot.version>
         <paper.version>1.16.5-R0.1-SNAPSHOT</paper.version>
         <waterfall.version>1.16-R0.4-SNAPSHOT</waterfall.version>
-        <velocity.version>1.1.4</velocity.version>
+        <velocity.version>3.0.0</velocity.version>
         <bstats.version>2.2.1</bstats.version>
         <mockbukkit.version>0.31.0</mockbukkit.version>
 
