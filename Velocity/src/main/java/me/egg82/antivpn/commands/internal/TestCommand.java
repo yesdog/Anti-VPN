@@ -1,3 +1,4 @@
+/*
 package me.egg82.antivpn.commands.internal;
 
 import co.aikar.commands.CommandIssuer;
@@ -83,3 +84,4 @@ public class TestCommand extends AbstractCommand {
         issuer.sendInfo(MessageKey.TEST__END, "{ip}", ip);
     }
 }
+*/

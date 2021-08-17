@@ -1,3 +1,4 @@
+/*
 package me.egg82.antivpn.commands.internal;
 
 import co.aikar.commands.CommandIssuer;
@@ -121,3 +122,4 @@ public class ScoreCommand extends AbstractCommand {
         issuer.sendInfo(MessageKey.SCORE__SCORE, "{source}", source.getName(), "{type}", vpnName, "{percent}", format.format((good / ips.size()) * 100.0d));
     }
 }
+*/

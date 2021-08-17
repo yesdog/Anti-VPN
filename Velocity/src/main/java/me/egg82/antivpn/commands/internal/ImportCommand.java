@@ -1,3 +1,4 @@
+/*
 package me.egg82.antivpn.commands.internal;
 
 import co.aikar.commands.CommandIssuer;
@@ -92,3 +93,4 @@ public class ImportCommand extends AbstractCommand {
         issuer.sendInfo(MessageKey.IMPORT__END);
     }
 }
+*/

@@ -19,6 +19,7 @@ import me.egg82.antivpn.locale.LocalizedCommandSender;
 import me.egg82.antivpn.services.lookup.PlayerInfo;
 import me.egg82.antivpn.services.lookup.PlayerLookup;
 import me.egg82.antivpn.utils.ValidationUtil;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import ninja.egg82.events.VelocityEvents;
 import ninja.egg82.service.ServiceLocator;
@@ -154,9 +155,9 @@ public class PlayerEvents extends EventHolder {
                     logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                 }
             }
-            String kickMessage = ipManager.getVpnKickMessage(event.getUsername(), uuid, ip);
+            Component kickMessage = ipManager.getVpnKickMessage(event.getUsername(), uuid, ip);
             if (kickMessage != null) {
-                event.setResult(PreLoginEvent.PreLoginComponentResult.denied(LegacyComponentSerializer.legacyAmpersand().deserialize(kickMessage)));
+                event.setResult(PreLoginEvent.PreLoginComponentResult.denied(kickMessage));
             }
         }
 
@@ -167,9 +168,9 @@ public class PlayerEvents extends EventHolder {
             for (String command : commands) {
                 proxy.getCommandManager().executeImmediatelyAsync(proxy.getConsoleCommandSource(), command);
             }
-            String kickMessage = playerManager.getMcLeaksKickMessage(event.getUsername(), uuid, ip);
+            Component kickMessage = playerManager.getMcLeaksKickMessage(event.getUsername(), uuid, ip);
             if (kickMessage != null) {
-                event.setResult(PreLoginEvent.PreLoginComponentResult.denied(LegacyComponentSerializer.legacyAmpersand().deserialize(kickMessage)));
+                event.setResult(PreLoginEvent.PreLoginComponentResult.denied(kickMessage));
             }
         }
     }
@@ -284,9 +285,9 @@ public class PlayerEvents extends EventHolder {
             for (String command : commands) {
                 proxy.getCommandManager().executeImmediatelyAsync(proxy.getConsoleCommandSource(), command);
             }
-            String kickMessage = ipManager.getVpnKickMessage(event.getPlayer().getUsername(), event.getPlayer().getUniqueId(), ip);
+            Component kickMessage = ipManager.getVpnKickMessage(event.getPlayer().getUsername(), event.getPlayer().getUniqueId(), ip);
             if (kickMessage != null) {
-                event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(kickMessage));
+                event.getPlayer().disconnect(kickMessage);
             }
         }
 
@@ -297,9 +298,9 @@ public class PlayerEvents extends EventHolder {
             for (String command : commands) {
                 proxy.getCommandManager().executeImmediatelyAsync(proxy.getConsoleCommandSource(), command);
             }
-            String kickMessage = playerManager.getMcLeaksKickMessage(event.getPlayer().getUsername(), event.getPlayer().getUniqueId(), ip);
+            Component kickMessage = playerManager.getMcLeaksKickMessage(event.getPlayer().getUsername(), event.getPlayer().getUniqueId(), ip);
             if (kickMessage != null) {
-                event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(kickMessage));
+                event.getPlayer().disconnect(kickMessage);
             }
         }
     }

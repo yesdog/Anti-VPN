@@ -1,3 +1,4 @@
+/*
 package me.egg82.antivpn.commands.internal;
 
 import co.aikar.commands.CommandIssuer;
@@ -75,3 +76,4 @@ public class ReloadCommand extends AbstractCommand {
         issuer.sendInfo(MessageKey.RELOAD__END);
     }
 }
+*/
