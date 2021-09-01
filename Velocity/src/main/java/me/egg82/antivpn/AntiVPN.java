@@ -1,6 +1,7 @@
 package me.egg82.antivpn;
 
 import co.aikar.commands.*;
+import co.aikar.locales.MessageKeyProvider;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.SetMultimap;
 import com.velocitypowered.api.event.PostOrder;
@@ -13,6 +14,7 @@ import me.egg82.antivpn.api.APIRegistrationUtil;
 import me.egg82.antivpn.api.VPNAPI;
 import me.egg82.antivpn.api.VPNAPIImpl;
 import me.egg82.antivpn.api.VPNAPIProvider;
+import me.egg82.antivpn.api.event.VPNEvent;
 import me.egg82.antivpn.api.event.api.APIDisableEventImpl;
 import me.egg82.antivpn.api.event.api.APILoadedEventImpl;
 import me.egg82.antivpn.api.model.ip.VelocityIPManager;
@@ -33,19 +35,18 @@ import me.egg82.antivpn.events.PlayerEvents;
 import me.egg82.antivpn.hooks.LuckPermsHook;
 import me.egg82.antivpn.hooks.PlayerAnalyticsHook;
 import me.egg82.antivpn.hooks.PluginHook;
-import me.egg82.antivpn.locale.LanguageFileUtil;
-import me.egg82.antivpn.locale.LocalizedCommandSender;
-import me.egg82.antivpn.locale.MessageKey;
-import me.egg82.antivpn.locale.PluginMessageFormatter;
+import me.egg82.antivpn.locale.*;
 import me.egg82.antivpn.messaging.MessagingService;
 import me.egg82.antivpn.messaging.ServerIDUtil;
 import me.egg82.antivpn.messaging.handler.MessagingHandler;
 import me.egg82.antivpn.messaging.handler.MessagingHandlerImpl;
-import me.egg82.antivpn.services.GameAnalyticsErrorHandler;
 import me.egg82.antivpn.storage.StorageService;
 import me.egg82.antivpn.utils.ValidationUtil;
 import net.engio.mbassy.bus.MBassador;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.event.SimpleEventBus;
 import ninja.egg82.events.VelocityEventSubscriber;
 import ninja.egg82.service.ServiceLocator;
 import org.jetbrains.annotations.NotNull;
@@ -90,10 +91,6 @@ public class AntiVPN {
     }
 
     public void onEnable() {
-        GameAnalyticsErrorHandler.open(ServerIDUtil.getId(new File(
-                new File(description.getSource().get().getParent().toFile(), description.getName().get()),
-                "stats-id.txt"
-        )), description.getVersion().get(), proxy.getVersion().getVersion());
 
         commandManager = new VelocityCommandManager(proxy, plugin);
         commandManager.enableUnstableAPI("help");
@@ -101,7 +98,18 @@ public class AntiVPN {
         setChatColors();
 
         // TODO fix
-        consoleCommandIssuer = commandManager.getCommandIssuer(proxy.getConsoleCommandSource());
+        VelocityCommandIssuer console = commandManager.getCommandIssuer(proxy.getConsoleCommandSource());
+        consoleCommandIssuer = new AbstractLocalizedCommandSender(console, console.getIssuer(), LocaleUtil.getConsoleI18N()) {
+            @Override
+            public boolean isConsole() {
+                return true;
+            }
+
+            @Override
+            public boolean isUser() {
+                return false;
+            }
+        };
 
         loadServices();
         loadLanguages();
@@ -153,7 +161,6 @@ public class AntiVPN {
 
         consoleCommandIssuer.sendMessage(MessageKey.GENERAL__DISABLE_MESSAGE);
 
-        GameAnalyticsErrorHandler.close();
     }
 
     private void loadLanguages() {
@@ -163,13 +170,13 @@ public class AntiVPN {
 
         try {
             for (Locale locale : Locale.getAvailableLocales()) {
-                Optional<File> localeFile = LanguageFileUtil.getLanguage(
+                ResourceBundle localeFile = LanguageFileUtil.getLanguage(
                         new File(description.getSource().get().getParent().toFile(), description.getName().get()),
                         locale
                 );
-                if (localeFile.isPresent()) {
+                if (localeFile != null) {
                     commandManager.addSupportedLanguage(locale);
-                    loadYamlLanguageFile(locales, localeFile.get(), locale);
+                    //loadYamlLanguageFile(locales, localeFile.get(), locale);
                 }
             }
         } catch (IOException ex) {
@@ -180,14 +187,12 @@ public class AntiVPN {
         locales.setDefaultLocale(cachedConfig.getLanguage());
         commandManager.usePerIssuerLocale(true);
 
-        commandManager.setFormat(MessageType.ERROR, new PluginMessageFormatter(commandManager, MessageKey.GENERAL__HEADER));
-        commandManager.setFormat(MessageType.INFO, new PluginMessageFormatter(commandManager, MessageKey.GENERAL__HEADER));
         setChatColors();
     }
 
     private void setChatColors() {
-        commandManager.setFormat(MessageType.ERROR, NamedTextColor.DARK_RED, NamedTextColor.YELLOW, NamedTextColor.AQUA, NamedTextColor.WHITE);
-        commandManager.setFormat(
+        //commandManager.setFormat(MessageType.ERROR, NamedTextColor.DARK_RED, NamedTextColor.YELLOW, NamedTextColor.AQUA, NamedTextColor.WHITE);
+        /*commandManager.setFormat(
                 MessageType.INFO,
                 NamedTextColor.WHITE,
                 NamedTextColor.YELLOW,
@@ -198,7 +203,7 @@ public class AntiVPN {
                 NamedTextColor.BLUE,
                 NamedTextColor.GRAY,
                 NamedTextColor.DARK_RED
-        );
+        );*/
     }
 
     private void loadServices() {
@@ -226,13 +231,11 @@ public class AntiVPN {
         );
         Platform platform = new VelocityPlatform(System.currentTimeMillis());
         VelocityPluginMetadata metadata = new VelocityPluginMetadata(proxy.getVersion().getVersion());
-        VPNAPI api = new VPNAPIImpl(platform, metadata, ipManager, playerManager, sourceManager, cachedConfig, new MBassador<>(new GenericPublicationErrorHandler()));
-
-        APIUtil.setManagers(ipManager, playerManager, sourceManager);
+        VPNAPI api = new VPNAPIImpl(platform, metadata, ipManager, playerManager, sourceManager, new SimpleEventBus<>(VPNEvent.class));
 
         APIRegistrationUtil.register(api);
 
-        api.getEventBus().post(new APILoadedEventImpl(api)).now();
+        api.getEventBus().post(new APILoadedEventImpl(api));
     }
 
     private void loadCommands() {
@@ -388,8 +391,8 @@ public class AntiVPN {
 
     public void unloadServices() {
         VPNAPI api = VPNAPIProvider.getInstance();
-        api.getEventBus().post(new APIDisableEventImpl(api)).now();
-        api.getEventBus().shutdown();
+        api.getEventBus().post(new APIDisableEventImpl(api));
+        api.getEventBus().unregisterAll();
         APIRegistrationUtil.deregister();
 
         CachedConfig cachedConfig = ConfigUtil.getCachedConfig();
@@ -401,9 +404,6 @@ public class AntiVPN {
         }
 
         Set<? extends MessagingHandler> messagingHandlers = ServiceLocator.remove(MessagingHandler.class);
-        for (MessagingHandler handler : messagingHandlers) {
-            handler.cancel();
-        }
     }
 
     public boolean loadYamlLanguageFile(@NotNull VelocityLocales locales, @NotNull File file, @NotNull Locale locale) throws IOException {
@@ -417,7 +417,9 @@ public class AntiVPN {
             for (Map.Entry<Object, CommentedConfigurationNode> kvp2 : kvp.getValue().childrenMap().entrySet()) {
                 String value = kvp2.getValue().getString();
                 if (value != null && !value.isEmpty()) {
-                    locales.addMessage(locale, MessageKey.of(kvp.getKey() + "." + kvp2.getKey()), value);
+                    Map<String, String> m = new HashMap<>();
+                    m.put(kvp.getKey() + "." + kvp2.getKey(), value);
+                    locales.addMessageStrings(locale, m);
                     loaded = true;
                 }
             }

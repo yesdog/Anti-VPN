@@ -5,6 +5,7 @@ import me.egg82.antivpn.api.model.ip.AbstractIPManager;
 import me.egg82.antivpn.api.model.player.AbstractPlayerManager;
 import me.egg82.antivpn.api.model.source.SourceManagerImpl;
 import me.egg82.antivpn.api.platform.Platform;
+import me.egg82.antivpn.api.platform.PluginMetadata;
 import me.egg82.antivpn.config.ConfigUtil;
 import me.egg82.antivpn.utils.PacketUtil;
 import me.egg82.antivpn.api.platform.AbstractPluginMetadata;
@@ -30,7 +31,7 @@ public class VPNAPIImpl implements VPNAPI {
 
     public VPNAPIImpl(
             @NotNull Platform platform,
-            @NotNull AbstractPluginMetadata pluginMetadata,
+            @NotNull PluginMetadata pluginMetadata,
             @NotNull AbstractIPManager ipManager,
             @NotNull AbstractPlayerManager playerManager,
             @NotNull SourceManagerImpl sourceManager,
