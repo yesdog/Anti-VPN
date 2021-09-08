@@ -8,7 +8,6 @@ import me.egg82.antivpn.api.platform.Platform;
 import me.egg82.antivpn.api.platform.PluginMetadata;
 import me.egg82.antivpn.config.ConfigUtil;
 import me.egg82.antivpn.utils.PacketUtil;
-import me.egg82.antivpn.api.platform.AbstractPluginMetadata;
 import net.kyori.event.EventBus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class VPNAPIImpl implements VPNAPI {
     private final @NotNull Platform platform;
-    private final @NotNull AbstractPluginMetadata pluginMetadata;
+    private final @NotNull PluginMetadata pluginMetadata;
 
     private final @NotNull AbstractIPManager ipManager;
     private final @NotNull AbstractPlayerManager playerManager;
@@ -70,7 +69,7 @@ public class VPNAPIImpl implements VPNAPI {
 
     @Override
     @NotNull
-    public AbstractPluginMetadata getPluginMetadata() { return pluginMetadata; }
+    public PluginMetadata getPluginMetadata() { return pluginMetadata; }
 
     @Override
     @NotNull
