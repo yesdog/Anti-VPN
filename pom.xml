@@ -45,10 +45,11 @@
 
         <cloud.version>1.5.0</cloud.version>
         <commodore.version>1.10</commodore.version>
-        <adventure.version>4.7.0</adventure.version> <!-- keep updated with Paper: https://github.com/PaperMC/Paper/blob/master/Spigot-API-Patches/0005-Adventure.patch -->
-        <adventure.bukkit.version>4.0.0-SNAPSHOT</adventure.bukkit.version>
-        <adventure.bungeecord.version>4.0.0-SNAPSHOT</adventure.bungeecord.version>
-        <minimessage.version>4.1.0-SNAPSHOT</minimessage.version>
+        <adventure.version>4.8.1</adventure.version> <!-- keep updated with Paper: https://github.com/PaperMC/Paper/blob/master/Spigot-API-Patches/0005-Adventure.patch
+         -->
+        <adventure.bukkit.version>4.8.1</adventure.bukkit.version>
+        <adventure.bungeecord.version>4.8.1</adventure.bungeecord.version>
+        <minimessage.version>4.2.0-SNAPSHOT</minimessage.version>
         <eventchain.api.version>2.1.0</eventchain.api.version>
         <eventchain.version>3.1.2</eventchain.version>
         <mvn-loader.version>1.2.1</mvn-loader.version>

@@ -288,7 +288,7 @@
             <version>${cloud.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.kyori</groupId>
+            <groupId>me.lucko</groupId>
             <artifactId>adventure-platform-bungeecord</artifactId>
             <version>${adventure.bungeecord.version}</version>
         </dependency>

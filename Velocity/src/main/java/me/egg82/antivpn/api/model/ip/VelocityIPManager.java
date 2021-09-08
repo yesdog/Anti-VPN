@@ -6,7 +6,9 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import me.egg82.antivpn.api.model.source.SourceManager;
 import me.egg82.antivpn.config.CachedConfig;
 import me.egg82.antivpn.config.ConfigUtil;
+import me.egg82.antivpn.utils.TimeUtil;
 import me.egg82.antivpn.utils.VelocityTailorUtil;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,8 +21,8 @@ import java.util.concurrent.TimeUnit;
 public class VelocityIPManager extends AbstractIPManager {
     private final ProxyServer proxy;
 
-    public VelocityIPManager(@NotNull ProxyServer proxy, @NotNull SourceManager sourceManager, long cacheTime, TimeUnit cacheTimeUnit) {
-        super(sourceManager, cacheTime, cacheTimeUnit);
+    public VelocityIPManager(@NotNull ProxyServer proxy, @NotNull SourceManager sourceManager, TimeUtil.Time cacheTime, TimeUnit cacheTimeUnit) {
+        super(sourceManager, cacheTime);
         this.proxy = proxy;
     }
 
@@ -39,18 +41,17 @@ public class VelocityIPManager extends AbstractIPManager {
         }
         if (!cachedConfig.getVPNKickMessage().isEmpty()) {
             p.get()
-                    .disconnect(LegacyComponentSerializer.legacyAmpersand()
-                                        .deserialize(VelocityTailorUtil.tailorKickMessage(cachedConfig.getVPNKickMessage(), playerName, playerUuid, ip)));
+                    .disconnect(VelocityTailorUtil.tailorKickMessage(Component.text(cachedConfig.getVPNKickMessage()), playerName, playerUuid, ip));
         }
         return true;
     }
 
     @Override
-    public @Nullable String getVpnKickMessage(@NotNull String playerName, @NotNull UUID playerUuid, @NotNull String ip) {
+    public @Nullable Component getVpnKickMessage(@NotNull String playerName, @NotNull UUID playerUuid, @NotNull String ip) {
         CachedConfig cachedConfig = ConfigUtil.getCachedConfig();
 
         if (!cachedConfig.getVPNKickMessage().isEmpty()) {
-            return VelocityTailorUtil.tailorKickMessage(cachedConfig.getVPNKickMessage(), playerName, playerUuid, ip);
+            return VelocityTailorUtil.tailorKickMessage(Component.text(cachedConfig.getVPNKickMessage()), playerName, playerUuid, ip);
         }
         return null;
     }

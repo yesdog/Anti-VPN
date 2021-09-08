@@ -1,5 +1,8 @@
 package me.egg82.antivpn.utils;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.TextReplacementConfig;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +31,14 @@ public class VelocityTailorUtil {
         return retVal;
     }
 
-    public static @NotNull String tailorKickMessage(@NotNull String message, @NotNull String name, @NotNull UUID uuid, @NotNull String ip) {
-        message = message.replace("%player%", name).replace("%uuid%", uuid.toString()).replace("%ip%", ip);
-        return message.replace("\\r", "").replace("\r", "").replace("\\n", "\n");
+    public static @NotNull Component tailorKickMessage(@NotNull Component message, @NotNull String name, @NotNull UUID uuid, @NotNull String ip) {
+        message = message.asComponent()
+                        .replaceText(TextReplacementConfig.builder().match("%player%").replacement(name).build())
+                        .replaceText(TextReplacementConfig.builder().match("%uuid%").replacement(uuid.toString()).build())
+                        .replaceText(TextReplacementConfig.builder().match("%ip%").replacement(ip).build())
+                        .replaceText(TextReplacementConfig.builder().match("\\r").replacement("").build())
+                        .replaceText(TextReplacementConfig.builder().match("\r").replacement("").build())
+                        .replaceText(TextReplacementConfig.builder().match("\\n").replacement("\n").build());
+        return message;
     }
 }

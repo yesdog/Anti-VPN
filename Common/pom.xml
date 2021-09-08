@@ -92,6 +92,10 @@
             <id>sponge</id>
             <url>https://repo.spongepowered.org/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>wesjd-repo</id>
+            <url>https://nexus.wesjd.net/repository/thirdparty/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -203,6 +207,12 @@
             <groupId>me.egg82</groupId>
             <artifactId>antivpn-api</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>me.gong</groupId>
+            <artifactId>mcleaks-api</artifactId>
+            <version>1.9.5-SNAPSHOT</version>
         </dependency>
 
         <!-- API -->
