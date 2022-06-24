@@ -10,7 +10,6 @@ import me.egg82.antivpn.services.lookup.PlayerLookup;
 import me.egg82.antivpn.storage.StorageService;
 import me.egg82.antivpn.storage.models.PlayerModel;
 import me.egg82.antivpn.utils.TimeUtil;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.craftbukkit.BukkitComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -87,7 +86,7 @@ public class BukkitPlayerManager extends AbstractPlayerManager {
     }
 
     @Override
-    public @Nullable Component getMcLeaksKickMessage(@NotNull String playerName, @NotNull UUID playerUuid, @NotNull String ip) {
+    public @NotNull String getMcLeaksKickMessage(@NotNull String playerName, @NotNull UUID playerUuid, @NotNull String ip) {
         CachedConfig cachedConfig = ConfigUtil.getCachedConfig();
 
         if (!cachedConfig.getMCLeaksKickMessage().isEmpty()) {

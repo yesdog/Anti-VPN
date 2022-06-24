@@ -116,7 +116,7 @@ public class ScoreCommand extends AbstractCommand {
                 error += 1;
                 continue;
             } catch (ExecutionException | CancellationException ex) {
-                ExceptionUtil.handleException(ex, logger);
+                logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                 if (!(ex.getCause() instanceof APIException) || !((APIException) ex.getCause()).isHard()) {
                     error += 1;
                 }

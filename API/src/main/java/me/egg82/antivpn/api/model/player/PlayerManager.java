@@ -357,7 +357,7 @@ public interface PlayerManager {
      *
      * @throws NullPointerException if playerName, playerUuid, or ip is null
      */
-    @Nullable
+    @NotNull
     Component getMcLeaksKickMessage(@NotNull String playerName, @NotNull UUID playerUuid, @NotNull String ip);
 
     /**

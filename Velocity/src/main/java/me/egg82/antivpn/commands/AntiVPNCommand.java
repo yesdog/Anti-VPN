@@ -24,6 +24,7 @@ public class AntiVPNCommand extends BaseCommand {
         this.console = console;
     }
 
+/*
     @Subcommand("reload")
     @CommandPermission("avpn.admin")
     @Description("{@@description.reload}")
@@ -80,6 +81,7 @@ public class AntiVPNCommand extends BaseCommand {
     public void onCheck(@NotNull LocalizedCommandSender issuer, @NotNull String type) {
         new CheckCommand(proxy, issuer, type).run();
     }
+*/
 
     @CatchUnknown
     @Default

@@ -1,3 +1,4 @@
+/*
 package me.egg82.antivpn.commands.internal;
 
 import co.aikar.commands.CommandIssuer;
@@ -10,7 +11,6 @@ import me.egg82.antivpn.api.model.source.models.SourceModel;
 import me.egg82.antivpn.config.ConfigUtil;
 import me.egg82.antivpn.locale.MessageKey;
 import me.egg82.antivpn.utils.DNSUtil;
-import me.egg82.antivpn.utils.ExceptionUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
@@ -104,7 +104,7 @@ public class ScoreCommand extends AbstractCommand {
                 error += 1;
                 continue;
             } catch (ExecutionException | CancellationException ex) {
-                ExceptionUtil.handleException(ex, logger);
+                logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                 if (!(ex.getCause() instanceof APIException) || !((APIException) ex.getCause()).isHard()) {
                     error += 1;
                 }
@@ -122,3 +122,4 @@ public class ScoreCommand extends AbstractCommand {
         issuer.sendInfo(MessageKey.SCORE__SCORE, "{source}", source.getName(), "{type}", vpnName, "{percent}", format.format((good / ips.size()) * 100.0d));
     }
 }
+*/

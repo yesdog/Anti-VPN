@@ -247,14 +247,13 @@
             <url>https://raw.github.com/rjenkinsjr/maven2/repo</url>
         </repository>
         <repository>
-            <id>plan</id>
-            <url>https://dl.bintray.com/rsl1122/Plan-repository</url>
-        </repository>
-        <repository>
             <id>CodeMC</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
-
+        <repository>
+            <id>wesjd-repo</id>
+            <url>https://nexus.wesjd.net/repository/thirdparty/</url>
+        </repository>
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -297,16 +296,20 @@
             <version>${depdownloader.version}</version>
         </dependency>
         <dependency>
+            <groupId>ninja.egg82</groupId>
+            <artifactId>service-locator</artifactId>
+            <version>${servicelocator.version}</version>
+        </dependency>
+        <dependency>
             <groupId>me.lucko</groupId>
             <artifactId>jar-relocator</artifactId>
             <version>${relocator.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.djrapitops</groupId>
-            <artifactId>Plan-api</artifactId>
+            <groupId>com.github.plan-player-analytics</groupId>
+            <artifactId>Plan</artifactId>
             <version>${plan.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.luckperms</groupId>
@@ -326,9 +329,14 @@
 
         <!-- common -->
         <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-velocity</artifactId>
+            <version>0.5.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
-            <version>${adventure.version}</version>
+            <version>${minimessage.version}</version>
         </dependency>
         <dependency>
             <groupId>net.oneandone.reflections8</groupId>
@@ -463,7 +471,16 @@
             <artifactId>mbassador</artifactId>
             <version>${mbassador.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>me.gong</groupId>
+            <artifactId>mcleaks-api</artifactId>
+            <version>1.9.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
         <!-- testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -1,3 +1,4 @@
+/*
 package me.egg82.antivpn.commands.internal;
 
 import co.aikar.commands.CommandIssuer;
@@ -93,3 +94,4 @@ public class KickCommand extends AbstractCommand {
         return host.getHostAddress();
     }
 }
+*/

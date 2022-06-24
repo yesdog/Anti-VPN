@@ -10,11 +10,12 @@ import me.egg82.antivpn.services.lookup.PlayerLookup;
 import me.egg82.antivpn.storage.StorageService;
 import me.egg82.antivpn.storage.models.PlayerModel;
 import me.egg82.antivpn.utils.PacketUtil;
+import me.egg82.antivpn.utils.TimeUtil;
 import me.egg82.antivpn.utils.VelocityTailorUtil;
 import me.gong.mcleaks.MCLeaksAPI;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +27,8 @@ public class VelocityPlayerManager extends AbstractPlayerManager {
     private final ProxyServer proxy;
     private final MCLeaksAPI api;
 
-    public VelocityPlayerManager(@NotNull ProxyServer proxy, int webThreads, String mcleaksKey, long cacheTime, TimeUnit cacheTimeUnit) {
-        super(cacheTime, cacheTimeUnit);
+    public VelocityPlayerManager(@NotNull ProxyServer proxy, int webThreads, String mcleaksKey, TimeUtil.Time cacheTime, TimeUnit cacheTimeUnit) {
+        super(cacheTime, mcleaksKey);
 
         this.proxy = proxy;
         api = MCLeaksAPI.builder()
@@ -87,18 +88,17 @@ public class VelocityPlayerManager extends AbstractPlayerManager {
         }
         if (!cachedConfig.getMCLeaksKickMessage().isEmpty()) {
             p.get()
-                    .disconnect(LegacyComponentSerializer.legacyAmpersand()
-                                        .deserialize(VelocityTailorUtil.tailorKickMessage(cachedConfig.getMCLeaksKickMessage(), playerName, playerUuid, ip)));
+                    .disconnect(VelocityTailorUtil.tailorKickMessage(Component.text(cachedConfig.getVPNKickMessage()), playerName, playerUuid, ip));
         }
         return true;
     }
 
     @Override
-    public @Nullable String getMcLeaksKickMessage(@NotNull String playerName, @NotNull UUID playerUuid, @NotNull String ip) {
+    public @NotNull Component getMcLeaksKickMessage(@NotNull String playerName, @NotNull UUID playerUuid, @NotNull String ip) {
         CachedConfig cachedConfig = ConfigUtil.getCachedConfig();
 
         if (!cachedConfig.getMCLeaksKickMessage().isEmpty()) {
-            return VelocityTailorUtil.tailorKickMessage(cachedConfig.getMCLeaksKickMessage(), playerName, playerUuid, ip);
+            return VelocityTailorUtil.tailorKickMessage(Component.text(cachedConfig.getVPNKickMessage()), playerName, playerUuid, ip);
         }
         return null;
     }

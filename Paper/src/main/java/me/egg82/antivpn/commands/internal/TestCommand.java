@@ -45,7 +45,7 @@ public class TestCommand extends AbstractCommand {
 
                         futures.add(source.getResult(ip).whenCompleteAsync((val, ex) -> {
                             if (ex != null) {
-                                ExceptionUtil.handleException(ex, logger);
+                                logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                                 latch.countDown();
                                 return;
                             }

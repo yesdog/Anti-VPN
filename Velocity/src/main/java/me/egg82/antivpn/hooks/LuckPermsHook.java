@@ -2,6 +2,7 @@ package me.egg82.antivpn.hooks;
 
 import co.aikar.commands.CommandIssuer;
 import me.egg82.antivpn.config.ConfigUtil;
+import me.egg82.antivpn.locale.LocalizedCommandSender;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.context.ContextManager;
 import net.luckperms.api.context.ImmutableContextSet;
@@ -13,9 +14,9 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class LuckPermsHook implements PluginHook {
-    private final CommandIssuer console;
+    private final LocalizedCommandSender console;
 
-    public LuckPermsHook(@NotNull CommandIssuer console) {
+    public LuckPermsHook(@NotNull LocalizedCommandSender console) {
         this.console = console;
     }
 

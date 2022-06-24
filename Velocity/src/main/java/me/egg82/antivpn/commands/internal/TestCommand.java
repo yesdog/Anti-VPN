@@ -1,3 +1,4 @@
+/*
 package me.egg82.antivpn.commands.internal;
 
 import co.aikar.commands.CommandIssuer;
@@ -9,7 +10,6 @@ import me.egg82.antivpn.api.model.source.models.SourceModel;
 import me.egg82.antivpn.config.CachedConfig;
 import me.egg82.antivpn.config.ConfigUtil;
 import me.egg82.antivpn.locale.MessageKey;
-import me.egg82.antivpn.utils.ExceptionUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -44,7 +44,7 @@ public class TestCommand extends AbstractCommand {
 
             futures.add(source.getResult(ip).whenCompleteAsync((val, ex) -> {
                 if (ex != null) {
-                    ExceptionUtil.handleException(ex, logger);
+                    logger.error(ex.getClass().getName() + ": " + ex.getMessage(), ex);
                     latch.countDown();
                     return;
                 }
@@ -84,3 +84,4 @@ public class TestCommand extends AbstractCommand {
         issuer.sendInfo(MessageKey.TEST__END, "{ip}", ip);
     }
 }
+*/
